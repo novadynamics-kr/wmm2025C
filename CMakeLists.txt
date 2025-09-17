@@ -24,6 +24,12 @@ if(MSVC)
   message(STATUS "Compiler : MSVC")
 endif()
 
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  target_link_libraries(wmm_mag PRIVATE m)
+  target_link_libraries(test_wmm_mag PRIVATE m)
+  message(STATUS "Compiler : GCC")
+endif()
+
 # =========================================================
 # Option: Choose library type (default: static)
 #   Build shared (dynamic) library with -DWMM_MAG_BUILD_SHARED=ON
