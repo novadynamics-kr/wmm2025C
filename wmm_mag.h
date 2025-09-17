@@ -16,6 +16,8 @@
 #ifndef WMM_MAG_H
 #define WMM_MAG_H
 
+#include <stddef.h> // for size_t
+
 #ifdef _WIN32
   #ifdef WMM_MAG_EXPORTS
     #define WMM_MAG_API __declspec(dllexport)
