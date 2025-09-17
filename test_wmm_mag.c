@@ -5,6 +5,16 @@
 #include <math.h>
 
 /**
+ * @brief for improved portablility. IEEE: only NaN is not equal to itself
+ * @param d double value
+ * @return 1 if d is NaN, else 0
+ */
+static int my_isnan(double d)
+{
+    return (d != d);
+}
+
+/**
  * @brief Print calculation results in table format.
  * @param[in] dlat,dlon,alt,time Location/time
  * @param[in] mag        Output values (D, I, F, GV, X, Y, Z, H, and annual changes)
@@ -32,18 +42,18 @@ void wmm_print_results(double dlat, double dlon, double alt, double time,
 
     printf("\n          Main Field    \t\t Secular Change   \t Uncertainty (+/-)");
 
-    if (isnan(mag->X)) printf("\n X      =    NaN         \t   dX  = NaN");
+    if (my_isnan(mag->X)) printf("\n X      =    NaN         \t   dX  = NaN");
     else               printf("\n X      =    %-+9.1lf nT\t   dX  = %-+8.1lf nT/yr   \t %-8.1lf nT",
                               mag->X, mag->Xdot, mag_error->X);
 
-    if (isnan(mag->Y)) printf("\n Y      =    NaN         \t   dY  = NaN");
+    if (my_isnan(mag->Y)) printf("\n Y      =    NaN         \t   dY  = NaN");
     else               printf("\n Y      =    %-+9.1lf nT\t   dY  = %-+8.1lf nT/yr   \t %-8.1lf nT",
                               mag->Y, mag->Ydot, mag_error->Y);
 
     printf("\n Z      =    %-+9.1lf nT\t   dZ  = %-+8.1lf nT/yr   \t %-8.1lf nT",
            mag->Z, mag->Zdot, mag_error->Z);
 
-    if (isnan(mag->H)) printf("\n H      =    NaN         \t   dH  = NaN");
+    if (my_isnan(mag->H)) printf("\n H      =    NaN         \t   dH  = NaN");
     else               printf("\n H      =    %-9.1lf nT\t   dH  = %-+8.1lf nT/yr   \t %-8.1lf nT",
                               mag->H, mag->Hdot, mag_error->H);
 
@@ -53,7 +63,7 @@ void wmm_print_results(double dlat, double dlon, double alt, double time,
     printf("\n I      =    %-+6.02lf    deg\t   dI  = %-+8.2lf deg/yr   \t %-8.2lf deg",
            mag->Incl, mag->Incldot, mag_error->Incldot);
 
-    if (isnan(mag->Decl))
+    if (my_isnan(mag->Decl))
         printf("\n D      =    NaN         \t   dD  = NaN");
     else
         printf("\n D      =    %-+6.02lf    deg\t   dD  = %-8.2lf deg/yr   \t %-8.2lf deg",
@@ -220,8 +230,8 @@ int load_wmm_test_values(const char* path, WMMTestCase** cases, size_t* count) {
 
 /** @brief |a-b|<=tol check. NaN is treated specially (both NaN = "equal"). */
 static int nearly_equal(double a, double b, double tol) {
-    if (isnan(a) && isnan(b)) return 1;
-    if (isnan(a) || isnan(b)) return 0;
+    if (my_isnan(a) && my_isnan(b)) return 1;
+    if (my_isnan(a) || my_isnan(b)) return 0;
     return fabs(a - b) <= tol;
 }
 
@@ -264,7 +274,7 @@ static void check_one_case(const WMMTestCase* tc, double tol, int* ok) {
     CHECK("D",     decl,  tc->decl);
 
     /* GV: skip comparison if expected is NaN or computed value is -999.0 (low latitude) */
-    if (!(isnan(tc->gv) || gv == -999.0)) {
+    if (!(my_isnan(tc->gv) || gv == -999.0)) {
         CHECK("GV", gv, tc->gv);
     }
 

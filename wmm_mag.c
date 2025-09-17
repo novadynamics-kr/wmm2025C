@@ -79,6 +79,15 @@
 static WMMState gWMM;
 static WMMVersion gWMMVer;
 
+/**
+ * @brief for improved portablility. IEEE: only NaN is not equal to itself
+ * @param d double value
+ * @return 1 if d is NaN, else 0
+ */
+static int my_isnan(double d)
+{
+    return (d != d);
+}
 
 /**
  * @brief Convert calendar date/time to decimal year (UTC).
@@ -759,7 +768,7 @@ void wmm_error(double h,
     double decl_variable;
     double decl_constant;
 
-    if (isnan(h) || (h < 100.0))
+    if (my_isnan(h) || (h < 100.0))
     {
         /* Magnetic pole (very small H): heading/angle components unreliable */
         if (uf)    *uf    = NAN;
