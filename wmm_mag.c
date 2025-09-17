@@ -76,6 +76,7 @@
 
 
 /* ---------- Globals ---------- */
+//TODO: allocate dynamically
 static WMMState gWMM;
 static WMMVersion gWMMVer;
 
@@ -645,21 +646,24 @@ void wmm_geomag(WMMState* S,
 /**
  * @brief (Wrapper) Initialize global WMM state: Reset → Load COF → Init.
  * @param[in] cof    COF file path
+ * @return true(1) on success
  */
-void wmm_init(const char *cof) {
+int wmm_init(const char *cof) {
     int maxdeg = 12;
     if (!wmm_reset(&gWMM, maxdeg)) {
         fprintf(stderr, "WMM reset failed\n");
-        exit(EXIT_FAILURE);
+        return 0;
     }
     if (!wmm_load_cof(&gWMM, cof, &gWMMVer)) {
         fprintf(stderr, "WMM load failed for %s\n", cof);
-        exit(EXIT_FAILURE);
+        return 0;
     }
     if (!wmm_init_state(&gWMM)) {
         fprintf(stderr, "WMM init failed\n");
-        exit(EXIT_FAILURE);
+        return 0;
     }
+
+    return 1;
 }
 
 /**

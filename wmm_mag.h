@@ -40,13 +40,14 @@ extern "C" {
  * @brief Initialize the global WMM state from a COF file.
  *
  * @param[in]     cof     Path to WMM COF file (e.g., "WMM2025.COF").
+ * @return true(1) on success, false(0) on failure.
  *
  * @details
  * This is a lightweight initializer that resets internal state,
  * loads Gauss coefficients (and secular-variation terms) from the COF,
  * and prepares Schmidt-semi-normalized tables used during synthesis.
  */
-WMM_MAG_API void wmm_init(const char *cof);
+WMM_MAG_API int wmm_init(const char *cof);
 
 /**
  * @brief Return the current WMM model metadata (epoch, model name, release date).
