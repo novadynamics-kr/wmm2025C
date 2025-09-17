@@ -1,0 +1,11 @@
+NOTICE — Use of U.S. Government Work (WMM)
+
+This product includes or is derived from the World Magnetic Model (WMM)
+information and source code produced by the U.S. Government (NOAA/NCEI).
+The WMM source code is in the public domain and not licensed or under copyright.
+The information and software may be used freely by the public.
+
+Pursuant to 17 U.S.C. §403, third parties producing copyrighted works that
+consist predominantly of U.S. Government material must provide notice
+identifying the U.S. Government material incorporated and stating that such
+material is not subject to copyright protection.
