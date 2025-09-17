@@ -21,7 +21,9 @@ This project provides a C library and test executable for calculating geomagneti
 ### Prerequisites
 
 - CMake >= 3.15
-- Tested compiler: MSVC 2022
+- compiler: MSVC 2022, (WSL Ubuntu) gcc 13.3.0
+
+  [![CMake on multiple platforms](https://github.com/novadynamics-kr/wmm2025C/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/novadynamics-kr/wmm2025C/actions/workflows/cmake-multi-platform.yml)
 
 ### Build Steps
 
