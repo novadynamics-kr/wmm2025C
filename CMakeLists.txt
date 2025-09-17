@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(WMM2025 )
+project(WMM2025C)
 
 # =========================================================
 # Default build type (change with -DCMAKE_BUILD_TYPE=Release if desired)
@@ -22,11 +22,6 @@ if(MSVC)
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
   add_compile_options(/utf-8)
   message(STATUS "Compiler : MSVC")
-endif()
-
-if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  target_link_libraries(wmm_mag PRIVATE m)
-  message(STATUS "Compiler : GCC")
 endif()
 
 # =========================================================
@@ -52,6 +47,11 @@ if(WMM_MAG_BUILD_SHARED)
   target_compile_definitions(wmm_mag PRIVATE WMM_MAG_EXPORTS)
 else()
   add_library(wmm_mag STATIC ${WMM_MAG_SOURCES})
+endif()
+
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  target_link_libraries(wmm_mag PRIVATE m)
+  message(STATUS "Compiler : GCC")
 endif()
 
 # Set public interface include path for other projects

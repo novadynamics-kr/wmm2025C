@@ -1,0 +1,46 @@
+{
+  "version": 5,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23
+  },
+  "configurePresets": [
+    {
+      "name": "wsl-gcc-debug",
+      "displayName": "WSL GCC Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "/usr/bin/gcc",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++"
+      }
+    },
+    {
+      "name": "wsl-gcc-release",
+      "displayName": "WSL GCC Release",
+      "inherits": "wsl-gcc-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "binaryDir": "${sourceDir}/build_${presetName}"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "wsl-gcc-debug-build",
+      "configurePreset": "wsl-gcc-debug"
+    },
+    {
+      "name": "wsl-gcc-release-build",
+      "configurePreset": "wsl-gcc-release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "wsl-gcc-test",
+      "configurePreset": "wsl-gcc-debug",
+      "output": {"outputOnFailure": true}
+    }
+  ]
+}
